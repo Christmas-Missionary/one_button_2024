@@ -7,4 +7,8 @@ func _physics_process(delta: float) -> void:
 func _unhandled_key_input(event: InputEvent) -> void:
 	const _BULLET_SCENE: PackedScene = preload("res://src/bullet.tscn")
 	if event.is_action_pressed(&"OneButton"):
-		(_BULLET_SCENE.instantiate() as Bullet).as_child_to(get_parent()).spawn(position, rotation)
+		(_BULLET_SCENE.instantiate() as Bullet).as_child_to(get_parent()).spawn(position, rotation) 
+
+func check_for_bullet(body: Node2D) -> void:
+	if body is Bullet:
+		get_tree().call_group(Bullet.GROUP_NAME, queue_free.get_method())
