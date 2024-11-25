@@ -1,10 +1,30 @@
-[gd_scene load_steps=4 format=3 uid="uid://b7ismxwl2or44"]
+[gd_scene load_steps=12 format=3 uid="uid://b7ismxwl2or44"]
 
 [ext_resource type="Script" path="res://src/player.gd" id="1_qw46f"]
 [ext_resource type="Texture2D" uid="uid://dg2jrk3exngto" path="res://assets/images/circle.png" id="1_vsxul"]
+[ext_resource type="AudioStream" uid="uid://cgqdwmw6mgfa2" path="res://assets/sfx/shoot_1.wav" id="3_e6gpw"]
+[ext_resource type="AudioStream" uid="uid://35naiw1gt3od" path="res://assets/sfx/shoot_2.wav" id="4_ogqi6"]
+[ext_resource type="AudioStream" uid="uid://bc5auknil5dme" path="res://assets/sfx/shoot_3.wav" id="5_arq2s"]
+[ext_resource type="AudioStream" uid="uid://vudl2te5iy6s" path="res://assets/sfx/death_1.wav" id="6_tehfi"]
+[ext_resource type="AudioStream" uid="uid://dfx24ma54y66" path="res://assets/sfx/death_2.wav" id="7_8vg3b"]
+[ext_resource type="AudioStream" uid="uid://cu13eh7shghd0" path="res://assets/sfx/death_3.wav" id="8_glt7y"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_l7oqs"]
 radius = 4.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_0o0h7"]
+random_pitch = 2.0
+streams_count = 3
+stream_0/stream = ExtResource("3_e6gpw")
+stream_1/stream = ExtResource("4_ogqi6")
+stream_2/stream = ExtResource("5_arq2s")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_yti6g"]
+random_pitch = 1.2
+streams_count = 3
+stream_0/stream = ExtResource("6_tehfi")
+stream_1/stream = ExtResource("7_8vg3b")
+stream_2/stream = ExtResource("8_glt7y")
 
 [node name="Player" type="Area2D"]
 script = ExtResource("1_qw46f")
@@ -23,4 +43,12 @@ texture = ExtResource("1_vsxul")
 [node name="Collision" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_l7oqs")
 
+[node name="Shoot" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_0o0h7")
+
+[node name="Death" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_yti6g")
+pitch_scale = 1.2
+
 [connection signal="body_entered" from="." to="." method="check_for_bullet"]
+[connection signal="finished" from="Death" to="." method="show"]
