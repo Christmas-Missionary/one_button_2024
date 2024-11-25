@@ -3,8 +3,9 @@ Details include where the asset is, where it came from, its copyright, its licen
 If the file path starts with "res://", it is a path relative to the top directory of the repo, one_button_2024.
 
 
-File: res://src/maze_gen.gd
-Source: https://github.com/Goldenlion5648/GodotMazeGenerationVisualizer/blob/master/maze_gen.gd
+Files: res://src/maze_gen.gd, res://src/camera.gd
+Sources: https://github.com/Goldenlion5648/GodotMazeGenerationVisualizer/blob/master/maze_gen.gd,  
+https://github.com/Goldenlion5648/GodotMazeGenerationVisualizer/blob/master/Camera2D.gd
 Copyright: 2023, Goldenlion5648/ThinkWithGames
 License: MIT License
 License in Full:

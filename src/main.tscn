@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://b7ismxwl2or44" path="res://src/player.tscn" id="1_qd62x"]
 [ext_resource type="Script" path="res://src/maze_gen.gd" id="2_66nrs"]
 [ext_resource type="PackedScene" uid="uid://bc1ucrs01aewx" path="res://src/target.tscn" id="3_sv1xn"]
-[ext_resource type="Script" path="res://src/camera_2d.gd" id="4_lbohn"]
+[ext_resource type="Script" path="res://src/camera.gd" id="4_lbohn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ocu0t"]
 texture = ExtResource("1_4rcel")
