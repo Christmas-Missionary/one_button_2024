@@ -4,9 +4,6 @@ const y_dim: int = 17
 const x_dim: int = 17
 
 var allow_loops: bool = false
-var spot_to_letter = {}
-var spot_to_label = {}
-var current_letter_num = 65
 
 var adj4 = [
 	Vector2i(-1, 0),
@@ -39,9 +36,6 @@ func _ready() -> void:
 		if current in seen or not _can_move_to(current):
 			continue
 		seen[current] = true
-		if current in spot_to_label:
-			for node in spot_to_label[current]:
-				node.queue_free()
 		if current.x % 2 == 1 and current.y % 2 == 1:
 			set_cell(current, 0, Vector2i.ZERO)
 			continue
