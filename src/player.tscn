@@ -16,11 +16,11 @@ offset_right = 9.0
 offset_bottom = 8.0
 rotation = 1.5708
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite" type="Sprite2D" parent="."]
 scale = Vector2(0.08, 0.08)
 texture = ExtResource("1_vsxul")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Collision" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_l7oqs")
 
 [connection signal="body_entered" from="." to="." method="check_for_bullet"]
