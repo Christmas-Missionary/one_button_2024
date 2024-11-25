@@ -3,7 +3,7 @@ class_name MazeGen
 const y_dim = 17
 const x_dim = 17
 
-var allow_loops: bool = true
+var allow_loops: bool = false
 var spot_to_letter = {}
 var spot_to_label = {}
 var current_letter_num = 65
@@ -18,13 +18,13 @@ var adj4 = [
 func _ready() -> void:
 	# place_border
 	for y in range(-1, y_dim):
-		place_wall(Vector2(-1, y))
+		set_cell(Vector2(-1, y), 0, Vector2i.ZERO)
 	for x in range(-1, x_dim):
-		place_wall(Vector2(x, -1))
+		set_cell(Vector2(x, -1), 0, Vector2i.ZERO)
 	for y in range(-1, y_dim + 1):
-		place_wall(Vector2(x_dim, y))
+		set_cell(Vector2(x_dim, y), 0, Vector2i.ZERO)
 	for x in range(-1, x_dim + 1):
-		place_wall(Vector2(x, y_dim))
+		set_cell(Vector2(x, y_dim), 0, Vector2i.ZERO)
 	
 	# Generate inside of maze
 	var fringe: Array[Vector2i] = [Vector2i.ZERO]
@@ -39,7 +39,7 @@ func _ready() -> void:
 			for node in spot_to_label[current]:
 				node.queue_free()
 		if current.x % 2 == 1 and current.y % 2 == 1:
-			place_wall(current)
+			set_cell(current, 0, Vector2i.ZERO)
 			continue
 		var found_new_path = false
 		adj4.shuffle()
@@ -50,23 +50,17 @@ func _ready() -> void:
 				if allow_loops:
 					chance_of_no_loop = randi_range(1, 5)
 				if (new_pos.x % 2 == 1 and new_pos.y % 2 == 1) and chance_of_no_loop == 1:
-					place_wall(new_pos)
+					set_cell(new_pos, 0, Vector2i.ZERO)
 				else:
 					found_new_path = true
 					fringe.append(new_pos)
 		#if we hit a dead end or are at a cross section
 		if not found_new_path:
-			place_wall(current)
+			set_cell(current, 0, Vector2i.ZERO)
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed(&"Reset"):
 		get_tree().reload_current_scene()
-
-func delete_cell_at(pos: Vector2):
-	set_cell(pos, -1)
-
-func place_wall(pos: Vector2):
-	set_cell(pos, 0, Vector2i.ZERO)
 
 func can_move_to(current: Vector2i):
 	return (
