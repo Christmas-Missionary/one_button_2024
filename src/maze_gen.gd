@@ -26,6 +26,7 @@ func _ready() -> void:
 	
 	($/root/Main/Target as Node2D).position = Vector2i(30, 30) * (Vector2i(x_dim, y_dim) - Vector2i.ONE) + Vector2i(15, 15)
 	
+	($/root/Main/Arrows as CanvasItem).set_visible(level == 1)
 	if (level == 1):
 		return
 	

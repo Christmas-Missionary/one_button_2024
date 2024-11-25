@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dh60k1irknwn4"]
+[gd_scene load_steps=17 format=3 uid="uid://dh60k1irknwn4"]
 
 [ext_resource type="Texture2D" uid="uid://h2aesnll3gfw" path="res://assets/images/block.png" id="1_4rcel"]
 [ext_resource type="PackedScene" uid="uid://b7ismxwl2or44" path="res://src/player.tscn" id="1_qd62x"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bc1ucrs01aewx" path="res://src/target.tscn" id="3_sv1xn"]
 [ext_resource type="Script" path="res://src/camera.gd" id="4_lbohn"]
 [ext_resource type="AudioStream" uid="uid://davbspjg0eoq8" path="res://assets/sfx/lv_complete_1.wav" id="6_8e3j0"]
+[ext_resource type="Texture2D" uid="uid://duywj6hnpoc0h" path="res://assets/images/arrow.png" id="6_77y7e"]
 [ext_resource type="Script" path="res://src/lv_animation.gd" id="6_a8la6"]
 [ext_resource type="AudioStream" uid="uid://cokywda6jm6ry" path="res://assets/sfx/lv_complete_2.wav" id="7_7gh7y"]
 [ext_resource type="AudioStream" uid="uid://chqxj5jfdg5hu" path="res://assets/sfx/lv_complete_3.wav" id="8_4m3x3"]
@@ -69,9 +70,11 @@ texture_filter = 1
 metadata/_edit_lock_ = true
 
 [node name="BulletPool" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
 
 [node name="Player" parent="." instance=ExtResource("1_qd62x")]
 position = Vector2(15, 15)
+metadata/_edit_lock_ = true
 
 [node name="Maze" type="TileMapLayer" parent="."]
 tile_set = SubResource("TileSet_rr2sg")
@@ -80,9 +83,20 @@ metadata/_edit_lock_ = true
 
 [node name="Camera" type="Camera2D" parent="."]
 script = ExtResource("4_lbohn")
+metadata/_edit_lock_ = true
 
 [node name="Target" parent="." instance=ExtResource("3_sv1xn")]
 position = Vector2(75, 75)
+
+[node name="Arrows" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(75, 45)
+texture = ExtResource("6_77y7e")
+
+[node name="OtherArrow" type="Sprite2D" parent="Arrows"]
+position = Vector2(-30, 30)
+rotation = -1.5708
+texture = ExtResource("6_77y7e")
 
 [node name="LVAnimation" type="ColorRect" parent="."]
 process_mode = 3
@@ -92,6 +106,7 @@ offset_right = 1970.0
 offset_bottom = 1970.0
 color = Color(0, 0, 0, 0)
 script = ExtResource("6_a8la6")
+metadata/_edit_lock_ = true
 
 [node name="Audio" type="AudioStreamPlayer" parent="LVAnimation"]
 stream = SubResource("AudioStreamRandomizer_b1ntb")
