@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://dh60k1irknwn4"]
+[gd_scene load_steps=8 format=3 uid="uid://dh60k1irknwn4"]
 
 [ext_resource type="Texture2D" uid="uid://h2aesnll3gfw" path="res://assets/images/block.png" id="1_4rcel"]
 [ext_resource type="PackedScene" uid="uid://b7ismxwl2or44" path="res://src/player.tscn" id="1_qd62x"]
 [ext_resource type="Script" path="res://src/maze_gen.gd" id="2_66nrs"]
 [ext_resource type="PackedScene" uid="uid://bc1ucrs01aewx" path="res://src/target.tscn" id="3_sv1xn"]
+[ext_resource type="Script" path="res://src/camera_2d.gd" id="4_lbohn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ocu0t"]
 texture = ExtResource("1_4rcel")
@@ -29,8 +30,7 @@ script = ExtResource("2_66nrs")
 metadata/_edit_lock_ = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(253, 141)
-zoom = Vector2(2, 2)
+script = ExtResource("4_lbohn")
 
 [node name="Target" parent="." instance=ExtResource("3_sv1xn")]
 position = Vector2(22, -12)
