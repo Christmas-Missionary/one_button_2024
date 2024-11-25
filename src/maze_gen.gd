@@ -45,6 +45,8 @@ func _ready() -> void:
 		# if we hit a dead end or are at a cross section
 		if !found_new_path:
 			set_cell(current, 0, Vector2i.ZERO)
+	
+	($/root/Main/Target as Node2D).position = Vector2i(30, 30) * (Vector2i(x_dim, y_dim) - Vector2i.ONE) + Vector2i(15, 15)
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed(&"Reset"):
