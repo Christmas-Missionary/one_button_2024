@@ -5,7 +5,7 @@ const x_dim: int = 17
 
 var allow_loops: bool = false
 
-var adj4 = [
+var adj4: Array[Vector2i] = [
 	Vector2i(-1, 0),
 	Vector2i(1, 0),
 	Vector2i(0, 1),
@@ -19,41 +19,38 @@ func _can_move_to(current: Vector2i) -> bool:
 func _ready() -> void:
 	# place_border
 	for y in range(-1, y_dim):
-		set_cell(Vector2(-1, y), 0, Vector2i.ZERO)
+		set_cell(Vector2i(-1, y), 0, Vector2i.ZERO)
 	for x in range(-1, x_dim):
-		set_cell(Vector2(x, -1), 0, Vector2i.ZERO)
+		set_cell(Vector2i(x, -1), 0, Vector2i.ZERO)
 	for y in range(-1, y_dim + 1):
-		set_cell(Vector2(x_dim, y), 0, Vector2i.ZERO)
+		set_cell(Vector2i(x_dim, y), 0, Vector2i.ZERO)
 	for x in range(-1, x_dim + 1):
-		set_cell(Vector2(x, y_dim), 0, Vector2i.ZERO)
+		set_cell(Vector2i(x, y_dim), 0, Vector2i.ZERO)
 	
 	# Generate inside of maze
 	var fringe: Array[Vector2i] = [Vector2i.ZERO]
-	var seen = {}
+	var seen: Array[Vector2i] = []
 	while fringe.size() > 0:
-		var current: Vector2i 
-		current = fringe.pop_back() as Vector2
-		if current in seen or not _can_move_to(current):
+		var current: Vector2i = fringe[-1]
+		fringe.resize(fringe.size() - 1)
+		if seen.has(current) or !_can_move_to(current):
 			continue
-		seen[current] = true
-		if current.x % 2 == 1 and current.y % 2 == 1:
+		seen.push_back(current)
+		if current % 2 == Vector2i.ONE: # current is never negative, truncated division is fine.
 			set_cell(current, 0, Vector2i.ZERO)
 			continue
-		var found_new_path = false
+		var found_new_path: bool = false
 		adj4.shuffle()
-		for pos in adj4:
-			var new_pos = current + pos
-			if new_pos not in seen and _can_move_to(new_pos):
-				var chance_of_no_loop = randi_range(1, 1)
-				if allow_loops:
-					chance_of_no_loop = randi_range(1, 5)
-				if (new_pos.x % 2 == 1 and new_pos.y % 2 == 1) and chance_of_no_loop == 1:
+		for pos: Vector2i in adj4:
+			var new_pos: Vector2i = current + pos
+			if !seen.has(new_pos) and _can_move_to(new_pos):
+				if new_pos % 2 == Vector2i.ONE and randi_range(1, 5 if allow_loops else 1) == 1:
 					set_cell(new_pos, 0, Vector2i.ZERO)
 				else:
 					found_new_path = true
 					fringe.append(new_pos)
-		#if we hit a dead end or are at a cross section
-		if not found_new_path:
+		# if we hit a dead end or are at a cross section
+		if !found_new_path:
 			set_cell(current, 0, Vector2i.ZERO)
 
 func _input(event: InputEvent) -> void:
