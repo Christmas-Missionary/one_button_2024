@@ -3,13 +3,11 @@ class_name MazeGen
 const y_dim = 17
 const x_dim = 17
 
-var starting_pos = Vector2i()
-var allow_loops: bool = false
+var allow_loops: bool = true
 var spot_to_letter = {}
 var spot_to_label = {}
 var current_letter_num = 65
 
-@export var starting_coords = Vector2i(0, 0)
 var adj4 = [
 	Vector2i(-1, 0),
 	Vector2i(1, 0),
@@ -18,14 +16,7 @@ var adj4 = [
 ]
 
 func _ready() -> void:
-	place_border()
-	dfs(starting_coords)
-
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed(&"Reset"):
-		get_tree().reload_current_scene()
-
-func place_border():
+	# place_border
 	for y in range(-1, y_dim):
 		place_wall(Vector2(-1, y))
 	for x in range(-1, x_dim):
@@ -34,22 +25,9 @@ func place_border():
 		place_wall(Vector2(x_dim, y))
 	for x in range(-1, x_dim + 1):
 		place_wall(Vector2(x, y_dim))
-
-func delete_cell_at(pos: Vector2):
-	set_cell(pos, -1)
-
-func place_wall(pos: Vector2):
-	set_cell(pos, 0, Vector2i.ZERO)
-
-func can_move_to(current: Vector2i):
-	return (
-			current.x >= 0 and current.y >= 0 and
-			current.x < x_dim and current.y < y_dim and
-			not get_cell_atlas_coords(current) == Vector2i.ZERO
-	)
-
-func dfs(start: Vector2i):
-	var fringe: Array[Vector2i] = [start]
+	
+	# Generate inside of maze
+	var fringe: Array[Vector2i] = [Vector2i.ZERO]
 	var seen = {}
 	while fringe.size() > 0:
 		var current: Vector2i 
@@ -79,3 +57,20 @@ func dfs(start: Vector2i):
 		#if we hit a dead end or are at a cross section
 		if not found_new_path:
 			place_wall(current)
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed(&"Reset"):
+		get_tree().reload_current_scene()
+
+func delete_cell_at(pos: Vector2):
+	set_cell(pos, -1)
+
+func place_wall(pos: Vector2):
+	set_cell(pos, 0, Vector2i.ZERO)
+
+func can_move_to(current: Vector2i):
+	return (
+			current.x >= 0 and current.y >= 0 and
+			current.x < x_dim and current.y < y_dim and
+			not get_cell_atlas_coords(current) == Vector2i.ZERO
+	)
