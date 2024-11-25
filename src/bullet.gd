@@ -14,7 +14,7 @@ func spawn(player_pos: Vector2, rot: float) -> void:
 	add_to_group(GROUP_NAME)
 	var _direction: Vector2 = Vector2.DOWN.rotated(rot)
 	velocity = _direction * 480.0
-	position = player_pos + _direction * 25.0
+	position = player_pos + _direction * 10.0
 
 func _physics_process(_delta) -> void:
 	move_and_slide()

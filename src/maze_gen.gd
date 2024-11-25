@@ -1,7 +1,7 @@
 extends TileMapLayer
 
-const _Y_DIM: int = 17
-const _X_DIM: int = 17
+const _Y_DIM: int = 9
+const _X_DIM: int = 9
 
 var _allow_loops: bool = false
 
