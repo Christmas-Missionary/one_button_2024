@@ -5,6 +5,8 @@ const GROUP_NAME: StringName = &"Bullets"
 
 static var num_of_bullets: int = 0
 
+@onready var _bounce: = $Bounce as AudioStreamPlayer
+
 func as_child_to(parent: Node) -> Bullet:
 	parent.add_child(self)
 	return self
@@ -19,6 +21,7 @@ func spawn(player_pos: Vector2, rot: float) -> void:
 func _physics_process(_delta) -> void:
 	move_and_slide()
 	if is_on_wall():
+		_bounce.play()
 		match (get_wall_normal()):
 			Vector2.UP, Vector2.DOWN:
 				velocity.y = -velocity.y
