@@ -1,7 +1,5 @@
 extends TileMapLayer
 class_name MazeGen
-const normal_wall_atlas_coords = Vector2i.ZERO
-const SOURCE_ID = 0
 const y_dim = 17
 const x_dim = 17
 
@@ -41,21 +39,13 @@ func delete_cell_at(pos: Vector2):
 	set_cell(pos, -1)
 
 func place_wall(pos: Vector2):
-	set_cell(pos, SOURCE_ID, normal_wall_atlas_coords)
-
-func will_be_converted_to_wall(spot: Vector2i):
-	return (spot.x % 2 == 1 and spot.y % 2 == 1)
-
-func is_wall(pos):
-	return get_cell_atlas_coords(pos) in [
-		normal_wall_atlas_coords
-	]
+	set_cell(pos, 0, Vector2i.ZERO)
 
 func can_move_to(current: Vector2i):
 	return (
-			current.x >= 0 and current.y >= 0 and\
-			current.x < x_dim and current.y < y_dim and\
-			not is_wall(current)
+			current.x >= 0 and current.y >= 0 and
+			current.x < x_dim and current.y < y_dim and
+			not get_cell_atlas_coords(current) == Vector2i.ZERO
 	)
 
 func dfs(start: Vector2i):
@@ -66,21 +56,13 @@ func dfs(start: Vector2i):
 		current = fringe.pop_back() as Vector2
 		if current in seen or not can_move_to(current):
 			continue
-			
 		seen[current] = true
 		if current in spot_to_label:
 			for node in spot_to_label[current]:
 				node.queue_free()
-##			var existing_letter = find_child(spot_to_letter[current])
-#			if existing_letter != null:
-#				existing_letter.queue_free()
 		if current.x % 2 == 1 and current.y % 2 == 1:
 			place_wall(current)
 			continue
-			
-		#set_cell(current, SOURCE_ID, walkable_atlas_coords)
-		
-		
 		var found_new_path = false
 		adj4.shuffle()
 		for pos in adj4:
@@ -89,7 +71,7 @@ func dfs(start: Vector2i):
 				var chance_of_no_loop = randi_range(1, 1)
 				if allow_loops:
 					chance_of_no_loop = randi_range(1, 5)
-				if will_be_converted_to_wall(new_pos) and chance_of_no_loop == 1:
+				if (new_pos.x % 2 == 1 and new_pos.y % 2 == 1) and chance_of_no_loop == 1:
 					place_wall(new_pos)
 				else:
 					found_new_path = true
