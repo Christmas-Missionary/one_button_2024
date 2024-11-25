@@ -3,8 +3,6 @@ extends TileMapLayer
 const _Y_DIM: int = 9
 const _X_DIM: int = 9
 
-var _allow_loops: bool = false
-
 func _can_move_to(current: Vector2i) -> bool:
 	const _MAZE_RECT: Rect2i = Rect2i(Vector2i.ZERO, Vector2i(_X_DIM, _Y_DIM))
 	return _MAZE_RECT.has_point(current) and get_cell_atlas_coords(current) != Vector2i.ZERO
@@ -38,7 +36,7 @@ func _ready() -> void:
 		for pos: Vector2i in four_dirs:
 			var new_pos: Vector2i = current + pos
 			if !seen.has(new_pos) and _can_move_to(new_pos):
-				if new_pos % 2 == Vector2i.ONE and randi_range(1, 5 if _allow_loops else 1) == 1:
+				if new_pos % 2 == Vector2i.ONE and randi_range(1, randi_range(2, 5)) == 1:
 					set_cell(new_pos, 0, Vector2i.ZERO)
 				else:
 					found_new_path = true
