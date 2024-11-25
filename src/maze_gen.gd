@@ -6,8 +6,8 @@ static var level: int = 1
 var x_dim: int = level_to_dim(level)
 var y_dim: int = x_dim
 
-func level_to_dim(lev: int) -> int:
-	return 3
+static func level_to_dim(lev: int) -> int:
+	return ((lev % 2) + 1) + lev
 
 func _can_move_to(current: Vector2i) -> bool:
 	var _MAZE_RECT: Rect2i = Rect2i(Vector2i.ZERO, Vector2i(x_dim, y_dim))
@@ -23,6 +23,11 @@ func _ready() -> void:
 		set_cell(Vector2i(x_dim, y), 0, Vector2i.ZERO)
 	for x in range(-1, x_dim + 1):
 		set_cell(Vector2i(x, y_dim), 0, Vector2i.ZERO)
+	
+	($/root/Main/Target as Node2D).position = Vector2i(30, 30) * (Vector2i(x_dim, y_dim) - Vector2i.ONE) + Vector2i(15, 15)
+	
+	if (level == 1):
+		return
 	
 	# Generate inside of maze
 	var fringe: Array[Vector2i] = [Vector2i.ZERO]
@@ -50,8 +55,6 @@ func _ready() -> void:
 		# if we hit a dead end or are at a cross section
 		if !found_new_path:
 			set_cell(current, 0, Vector2i.ZERO)
-	
-	($/root/Main/Target as Node2D).position = Vector2i(30, 30) * (Vector2i(x_dim, y_dim) - Vector2i.ONE) + Vector2i(15, 15)
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed(&"Reset"):
