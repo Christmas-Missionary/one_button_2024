@@ -1,24 +1,24 @@
 extends TileMapLayer
-class_name MazeGen
-const y_dim: int = 17
-const x_dim: int = 17
 
-var allow_loops: bool = false
+const _Y_DIM: int = 17
+const _X_DIM: int = 17
+
+var _allow_loops: bool = false
 
 func _can_move_to(current: Vector2i) -> bool:
-	const _MAZE_RECT: Rect2i = Rect2i(Vector2i.ZERO, Vector2i(x_dim, y_dim))
+	const _MAZE_RECT: Rect2i = Rect2i(Vector2i.ZERO, Vector2i(_X_DIM, _Y_DIM))
 	return _MAZE_RECT.has_point(current) and get_cell_atlas_coords(current) != Vector2i.ZERO
 
 func _ready() -> void:
 	# place_border
-	for y in range(-1, y_dim):
+	for y in range(-1, _Y_DIM):
 		set_cell(Vector2i(-1, y), 0, Vector2i.ZERO)
-	for x in range(-1, x_dim):
+	for x in range(-1, _X_DIM):
 		set_cell(Vector2i(x, -1), 0, Vector2i.ZERO)
-	for y in range(-1, y_dim + 1):
-		set_cell(Vector2i(x_dim, y), 0, Vector2i.ZERO)
-	for x in range(-1, x_dim + 1):
-		set_cell(Vector2i(x, y_dim), 0, Vector2i.ZERO)
+	for y in range(-1, _Y_DIM + 1):
+		set_cell(Vector2i(_X_DIM, y), 0, Vector2i.ZERO)
+	for x in range(-1, _X_DIM + 1):
+		set_cell(Vector2i(x, _Y_DIM), 0, Vector2i.ZERO)
 	
 	# Generate inside of maze
 	var fringe: Array[Vector2i] = [Vector2i.ZERO]
@@ -38,7 +38,7 @@ func _ready() -> void:
 		for pos: Vector2i in four_dirs:
 			var new_pos: Vector2i = current + pos
 			if !seen.has(new_pos) and _can_move_to(new_pos):
-				if new_pos % 2 == Vector2i.ONE and randi_range(1, 5 if allow_loops else 1) == 1:
+				if new_pos % 2 == Vector2i.ONE and randi_range(1, 5 if _allow_loops else 1) == 1:
 					set_cell(new_pos, 0, Vector2i.ZERO)
 				else:
 					found_new_path = true
