@@ -19,13 +19,15 @@ func spawn(player_pos: Vector2, rot: float) -> void:
 func _physics_process(_delta) -> void:
 	move_and_slide()
 	if is_on_wall():
+		#print(get_wall_normal())
 		match (get_wall_normal()):
 			Vector2.UP, Vector2.DOWN:
 				velocity.y = -velocity.y
 			Vector2.LEFT, Vector2.RIGHT:
 				velocity.x = -velocity.x
 			_:
-				velocity = velocity * (Vector2(-1, 1) if randi() % 2 else Vector2(1, -1))
+				const RAND_ROT: float = TAU/12.0
+				velocity = (-velocity).rotated(randf_range(-RAND_ROT, RAND_ROT))
 
 func _exit_tree() -> void:
 	num_of_bullets -= 1
