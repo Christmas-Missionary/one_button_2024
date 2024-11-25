@@ -1,7 +1,7 @@
 extends TileMapLayer
 class_name MazeGen
-const y_dim = 17
-const x_dim = 17
+const y_dim: int = 17
+const x_dim: int = 17
 
 var allow_loops: bool = false
 var spot_to_letter = {}
@@ -14,6 +14,10 @@ var adj4 = [
 	Vector2i(0, 1),
 	Vector2i(0, -1),
 ]
+
+func _can_move_to(current: Vector2i) -> bool:
+	const _MAZE_RECT: Rect2i = Rect2i(Vector2i.ZERO, Vector2i(x_dim, y_dim))
+	return _MAZE_RECT.has_point(current) and get_cell_atlas_coords(current) != Vector2i.ZERO
 
 func _ready() -> void:
 	# place_border
@@ -32,7 +36,7 @@ func _ready() -> void:
 	while fringe.size() > 0:
 		var current: Vector2i 
 		current = fringe.pop_back() as Vector2
-		if current in seen or not can_move_to(current):
+		if current in seen or not _can_move_to(current):
 			continue
 		seen[current] = true
 		if current in spot_to_label:
@@ -45,7 +49,7 @@ func _ready() -> void:
 		adj4.shuffle()
 		for pos in adj4:
 			var new_pos = current + pos
-			if new_pos not in seen and can_move_to(new_pos):
+			if new_pos not in seen and _can_move_to(new_pos):
 				var chance_of_no_loop = randi_range(1, 1)
 				if allow_loops:
 					chance_of_no_loop = randi_range(1, 5)
@@ -61,10 +65,3 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed(&"Reset"):
 		get_tree().reload_current_scene()
-
-func can_move_to(current: Vector2i):
-	return (
-			current.x >= 0 and current.y >= 0 and
-			current.x < x_dim and current.y < y_dim and
-			not get_cell_atlas_coords(current) == Vector2i.ZERO
-	)
