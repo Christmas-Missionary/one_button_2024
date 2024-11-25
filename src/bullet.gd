@@ -19,7 +19,6 @@ func spawn(player_pos: Vector2, rot: float) -> void:
 func _physics_process(_delta) -> void:
 	move_and_slide()
 	if is_on_wall():
-		#print(get_wall_normal())
 		match (get_wall_normal()):
 			Vector2.UP, Vector2.DOWN:
 				velocity.y = -velocity.y
