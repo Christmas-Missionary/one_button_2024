@@ -1,8 +1,13 @@
 extends TileMapLayer
 class_name Maze
 
-var y_dim: int = 25
-var x_dim: int = 25
+static var level: int = 1
+
+var x_dim: int = level_to_dim(level)
+var y_dim: int = x_dim
+
+func level_to_dim(lev: int) -> int:
+	return 3
 
 func _can_move_to(current: Vector2i) -> bool:
 	var _MAZE_RECT: Rect2i = Rect2i(Vector2i.ZERO, Vector2i(x_dim, y_dim))

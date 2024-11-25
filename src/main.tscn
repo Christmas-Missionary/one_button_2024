@@ -1,10 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://dh60k1irknwn4"]
+[gd_scene load_steps=16 format=3 uid="uid://dh60k1irknwn4"]
 
 [ext_resource type="Texture2D" uid="uid://h2aesnll3gfw" path="res://assets/images/block.png" id="1_4rcel"]
 [ext_resource type="PackedScene" uid="uid://b7ismxwl2or44" path="res://src/player.tscn" id="1_qd62x"]
 [ext_resource type="Script" path="res://src/maze_gen.gd" id="2_66nrs"]
 [ext_resource type="PackedScene" uid="uid://bc1ucrs01aewx" path="res://src/target.tscn" id="3_sv1xn"]
 [ext_resource type="Script" path="res://src/camera.gd" id="4_lbohn"]
+[ext_resource type="AudioStream" uid="uid://davbspjg0eoq8" path="res://assets/sfx/lv_complete_1.wav" id="6_8e3j0"]
+[ext_resource type="Script" path="res://src/lv_animation.gd" id="6_a8la6"]
+[ext_resource type="AudioStream" uid="uid://cokywda6jm6ry" path="res://assets/sfx/lv_complete_2.wav" id="7_7gh7y"]
+[ext_resource type="AudioStream" uid="uid://chqxj5jfdg5hu" path="res://assets/sfx/lv_complete_3.wav" id="8_4m3x3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ocu0t"]
 texture = ExtResource("1_4rcel")
@@ -17,9 +21,54 @@ tile_size = Vector2i(30, 30)
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_ocu0t")
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_b1ntb"]
+streams_count = 3
+stream_0/stream = ExtResource("6_8e3j0")
+stream_1/stream = ExtResource("7_7gh7y")
+stream_2/stream = ExtResource("8_4m3x3")
+
+[sub_resource type="Animation" id="Animation_fi8nb"]
+resource_name = "Fade"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1), Color(0, 0, 0, 0), Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_1acbi"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2ih3u"]
+_data = {
+"Fade": SubResource("Animation_fi8nb"),
+"RESET": SubResource("Animation_1acbi")
+}
+
 [node name="Main" type="Node2D"]
 texture_filter = 1
 metadata/_edit_lock_ = true
+
+[node name="BulletPool" type="Node2D" parent="."]
 
 [node name="Player" parent="." instance=ExtResource("1_qd62x")]
 position = Vector2(15, 15)
@@ -34,3 +83,22 @@ script = ExtResource("4_lbohn")
 
 [node name="Target" parent="." instance=ExtResource("3_sv1xn")]
 position = Vector2(75, 75)
+
+[node name="LVAnimation" type="ColorRect" parent="."]
+process_mode = 3
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 1970.0
+offset_bottom = 1970.0
+color = Color(0, 0, 0, 0)
+script = ExtResource("6_a8la6")
+
+[node name="Audio" type="AudioStreamPlayer" parent="LVAnimation"]
+stream = SubResource("AudioStreamRandomizer_b1ntb")
+
+[node name="Animation" type="AnimationPlayer" parent="LVAnimation"]
+libraries = {
+"": SubResource("AnimationLibrary_2ih3u")
+}
+
+[connection signal="bullet_entered" from="Target" to="LVAnimation" method="_play"]
