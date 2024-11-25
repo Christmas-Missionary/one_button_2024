@@ -1,22 +1,23 @@
 extends TileMapLayer
+class_name Maze
 
-const _Y_DIM: int = 9
-const _X_DIM: int = 9
+var y_dim: int = 25
+var x_dim: int = 25
 
 func _can_move_to(current: Vector2i) -> bool:
-	const _MAZE_RECT: Rect2i = Rect2i(Vector2i.ZERO, Vector2i(_X_DIM, _Y_DIM))
+	var _MAZE_RECT: Rect2i = Rect2i(Vector2i.ZERO, Vector2i(x_dim, y_dim))
 	return _MAZE_RECT.has_point(current) and get_cell_atlas_coords(current) != Vector2i.ZERO
 
 func _ready() -> void:
 	# place_border
-	for y in range(-1, _Y_DIM):
+	for y in range(-1, y_dim):
 		set_cell(Vector2i(-1, y), 0, Vector2i.ZERO)
-	for x in range(-1, _X_DIM):
+	for x in range(-1, x_dim):
 		set_cell(Vector2i(x, -1), 0, Vector2i.ZERO)
-	for y in range(-1, _Y_DIM + 1):
-		set_cell(Vector2i(_X_DIM, y), 0, Vector2i.ZERO)
-	for x in range(-1, _X_DIM + 1):
-		set_cell(Vector2i(x, _Y_DIM), 0, Vector2i.ZERO)
+	for y in range(-1, y_dim + 1):
+		set_cell(Vector2i(x_dim, y), 0, Vector2i.ZERO)
+	for x in range(-1, x_dim + 1):
+		set_cell(Vector2i(x, y_dim), 0, Vector2i.ZERO)
 	
 	# Generate inside of maze
 	var fringe: Array[Vector2i] = [Vector2i.ZERO]
