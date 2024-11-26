@@ -3,7 +3,7 @@ class_name Maze
 
 var x_dim: int
 var y_dim: int
-var level: int:
+@onready var level: int:
 	set(val):
 		level = val
 		x_dim = level_to_size(val)
