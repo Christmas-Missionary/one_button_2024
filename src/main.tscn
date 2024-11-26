@@ -116,4 +116,8 @@ libraries = {
 "": SubResource("AnimationLibrary_2ih3u")
 }
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[connection signal="level_changed" from="Maze" to="Maze" method="_generate_maze"]
+[connection signal="level_changed" from="Maze" to="Camera" method="_adjust"]
 [connection signal="bullet_entered" from="Target" to="LVAnimation" method="_play"]
