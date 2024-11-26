@@ -1,10 +1,6 @@
 extends CharacterBody2D
 class_name Bullet
 
-const GROUP_NAME: StringName = &"Bullets"
-
-static var num_of_bullets: int = 0
-
 @onready var _bounce: = $Bounce as AudioStreamPlayer
 
 func as_child_to(parent: Node) -> Bullet:
@@ -12,8 +8,6 @@ func as_child_to(parent: Node) -> Bullet:
 	return self
 
 func spawn(player_pos: Vector2, rot: float) -> void:
-	num_of_bullets += 1
-	add_to_group(GROUP_NAME)
 	var _direction: Vector2 = Vector2.DOWN.rotated(rot)
 	velocity = _direction * 480.0
 	position = player_pos + _direction * 10.0
@@ -30,6 +24,3 @@ func _physics_process(_delta) -> void:
 			_:
 				const RAND_ROT: float = TAU/12.0
 				velocity = (-velocity).rotated(randf_range(-RAND_ROT, RAND_ROT))
-
-func _exit_tree() -> void:
-	num_of_bullets -= 1
