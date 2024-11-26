@@ -15,6 +15,18 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		.as_child_to(_bullet_pool)
 		.spawn(position, rotation))
 		_shoot.play()
+		set_process(true)
+
+const _RESET_TIME: float = 5.0
+var time_left_to_reset: float = _RESET_TIME
+func _process(delta: float) -> void:
+	if Input.is_action_pressed(&"OneButton"):
+		time_left_to_reset -= delta
+		if time_left_to_reset <= 0.0:
+			get_tree().reload_current_scene()
+	else:
+		time_left_to_reset = _RESET_TIME
+		set_process(false)
 
 func check_for_bullet(body: Node2D) -> void:
 	if body is Bullet:
