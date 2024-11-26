@@ -9,9 +9,11 @@ func _physics_process(delta: float) -> void:
 	rotate(_ROT_SPEED * delta)
 
 func _unhandled_key_input(event: InputEvent) -> void:
-	const _BULLET_SCENE: PackedScene = preload("res://src/bullet.tscn")
 	if event.is_action_pressed(&"OneButton") and _bullet_pool.get_child_count() < 5 and is_visible():
-		(_BULLET_SCENE.instantiate() as Bullet).as_child_to(_bullet_pool).spawn(position, rotation)
+		((preload("res://src/bullet.tscn")
+		.instantiate() as Bullet)
+		.as_child_to(_bullet_pool)
+		.spawn(position, rotation))
 		_shoot.play()
 
 func check_for_bullet(body: Node2D) -> void:
