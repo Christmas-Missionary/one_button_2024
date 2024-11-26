@@ -1,13 +1,11 @@
 extends TileMapLayer
 class_name Maze
 
-var x_dim: int
-var y_dim: int
+var maze_length: int
 @onready var level: int:
 	set(val):
 		level = val
-		x_dim = level_to_size(val)
-		y_dim = x_dim
+		maze_length = level_to_size(val)
 		level_changed.emit(val)
 
 @onready var _target: = $"../Target" as Node2D
@@ -22,23 +20,23 @@ func _ready() -> void:
 	level = 1
 
 func _can_move_to(current: Vector2i) -> bool:
-	var _MAZE_RECT: Rect2i = Rect2i(Vector2i.ZERO, Vector2i(x_dim, y_dim))
+	var _MAZE_RECT: Rect2i = Rect2i(Vector2i.ZERO, Vector2i.ONE * maze_length)
 	return _MAZE_RECT.has_point(current) and get_cell_atlas_coords(current) != Vector2i.ZERO
 
 func _generate_maze(level_val: int) -> void:
 	clear()
 	
 	# place_border
-	for y in range(-1, y_dim):
+	for y in range(-1, maze_length):
 		set_cell(Vector2i(-1, y), 0, Vector2i.ZERO)
-	for x in range(-1, x_dim):
+	for x in range(-1, maze_length):
 		set_cell(Vector2i(x, -1), 0, Vector2i.ZERO)
-	for y in range(-1, y_dim + 1):
-		set_cell(Vector2i(x_dim, y), 0, Vector2i.ZERO)
-	for x in range(-1, x_dim + 1):
-		set_cell(Vector2i(x, y_dim), 0, Vector2i.ZERO)
+	for y in range(-1, maze_length + 1):
+		set_cell(Vector2i(maze_length, y), 0, Vector2i.ZERO)
+	for x in range(-1, maze_length + 1):
+		set_cell(Vector2i(x, maze_length), 0, Vector2i.ZERO)
 	
-	_target.position = Vector2i(30, 30) * (Vector2i(x_dim, y_dim) - Vector2i.ONE) + Vector2i(15, 15)
+	_target.position = Vector2i(30, 30) * (Vector2i.ONE * (maze_length - 1)) + Vector2i(15, 15)
 	
 	_arrows.set_visible(level_val == 1)
 	if (level_val == 1):
