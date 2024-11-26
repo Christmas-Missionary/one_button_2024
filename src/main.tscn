@@ -142,4 +142,3 @@ libraries = {
 [connection signal="bullet_entered" from="Target" to="LVAnimation" method="_play"]
 [connection signal="level_changed" from="Maze" to="Camera" method="_adjust"]
 [connection signal="level_changed" from="Maze" to="CanvasLayer/LevelTexture" method="_adjust_balls"]
-[connection signal="level_changed" from="Maze" to="Maze" method="_generate_maze"]
