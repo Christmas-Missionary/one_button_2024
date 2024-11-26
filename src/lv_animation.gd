@@ -5,6 +5,8 @@ func _play() -> void:
 	var _audio: = $Audio as AudioStreamPlayer
 	_audio.play()
 	await _audio.finished
-	Maze.level += 1
+	($"../Maze" as Maze).level += 1
 	get_tree().set_pause(false)
-	get_tree().reload_current_scene()
+	var _bullet_pool: Node = $/root/Main/BulletPool
+	for bullet: Node in _bullet_pool.get_children():
+		bullet.queue_free()

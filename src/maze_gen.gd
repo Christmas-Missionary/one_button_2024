@@ -1,16 +1,30 @@
 extends TileMapLayer
 class_name Maze
 
-static var level: int = 1
+var x_dim: int
+var y_dim: int
+var level: int:
+	set(val):
+		level = val
+		x_dim = level_to_size(val)
+		y_dim = x_dim
+		level_changed.emit(val)
 
-var x_dim: int = ((level % 2) + 1) + level
-var y_dim: int = x_dim
+signal level_changed(val: int)
+
+static func level_to_size(lev: int) -> int:
+	return ((lev % 2) + 1) + lev
+
+func _ready() -> void:
+	level = 1
 
 func _can_move_to(current: Vector2i) -> bool:
 	var _MAZE_RECT: Rect2i = Rect2i(Vector2i.ZERO, Vector2i(x_dim, y_dim))
 	return _MAZE_RECT.has_point(current) and get_cell_atlas_coords(current) != Vector2i.ZERO
 
-func _ready() -> void:
+func _generate_maze(level_val: int) -> void:
+	clear()
+	
 	# place_border
 	for y in range(-1, y_dim):
 		set_cell(Vector2i(-1, y), 0, Vector2i.ZERO)
@@ -23,8 +37,8 @@ func _ready() -> void:
 	
 	($/root/Main/Target as Node2D).position = Vector2i(30, 30) * (Vector2i(x_dim, y_dim) - Vector2i.ONE) + Vector2i(15, 15)
 	
-	($/root/Main/Arrows as CanvasItem).set_visible(level == 1)
-	if (level == 1):
+	($/root/Main/Arrows as CanvasItem).set_visible(level_val == 1)
+	if (level_val == 1):
 		return
 	
 	# Generate inside of maze
