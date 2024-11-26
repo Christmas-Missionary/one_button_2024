@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dh60k1irknwn4"]
+[gd_scene load_steps=19 format=3 uid="uid://dh60k1irknwn4"]
 
 [ext_resource type="Texture2D" uid="uid://h2aesnll3gfw" path="res://assets/images/block.png" id="1_4rcel"]
 [ext_resource type="PackedScene" uid="uid://b7ismxwl2or44" path="res://src/player.tscn" id="1_qd62x"]
@@ -10,6 +10,8 @@
 [ext_resource type="Script" path="res://src/lv_animation.gd" id="6_a8la6"]
 [ext_resource type="AudioStream" uid="uid://cokywda6jm6ry" path="res://assets/sfx/lv_complete_2.wav" id="7_7gh7y"]
 [ext_resource type="AudioStream" uid="uid://chqxj5jfdg5hu" path="res://assets/sfx/lv_complete_3.wav" id="8_4m3x3"]
+[ext_resource type="Texture2D" uid="uid://dg2jrk3exngto" path="res://assets/images/circle.png" id="11_rfsdh"]
+[ext_resource type="Script" path="res://src/level_texture.gd" id="12_sk8ig"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ocu0t"]
 texture = ExtResource("1_4rcel")
@@ -76,11 +78,6 @@ metadata/_edit_lock_ = true
 position = Vector2(15, 15)
 metadata/_edit_lock_ = true
 
-[node name="Maze" type="TileMapLayer" parent="."]
-tile_set = SubResource("TileSet_rr2sg")
-script = ExtResource("2_66nrs")
-metadata/_edit_lock_ = true
-
 [node name="Camera" type="Camera2D" parent="."]
 script = ExtResource("4_lbohn")
 metadata/_edit_lock_ = true
@@ -97,6 +94,32 @@ texture = ExtResource("6_77y7e")
 position = Vector2(-30, 30)
 rotation = -1.5708
 texture = ExtResource("6_77y7e")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="LevelTexture" type="TextureRect" parent="CanvasLayer"]
+texture_filter = 1
+offset_left = 1174.0
+offset_right = 1374.0
+offset_bottom = 5000.0
+scale = Vector2(0.13, 0.13)
+texture = ExtResource("11_rfsdh")
+stretch_mode = 1
+script = ExtResource("12_sk8ig")
+
+[node name="Rect" type="ColorRect" parent="CanvasLayer/LevelTexture"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 5000.0
+offset_right = 201.0
+offset_bottom = 9000.0
+rotation = 3.14159
+color = Color(0, 0, 0, 1)
+
+[node name="Maze" type="TileMapLayer" parent="."]
+tile_set = SubResource("TileSet_rr2sg")
+script = ExtResource("2_66nrs")
+metadata/_edit_lock_ = true
 
 [node name="LVAnimation" type="ColorRect" parent="."]
 process_mode = 3
@@ -116,8 +139,7 @@ libraries = {
 "": SubResource("AnimationLibrary_2ih3u")
 }
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[connection signal="level_changed" from="Maze" to="Maze" method="_generate_maze"]
-[connection signal="level_changed" from="Maze" to="Camera" method="_adjust"]
 [connection signal="bullet_entered" from="Target" to="LVAnimation" method="_play"]
+[connection signal="level_changed" from="Maze" to="Camera" method="_adjust"]
+[connection signal="level_changed" from="Maze" to="CanvasLayer/LevelTexture" method="_adjust_balls"]
+[connection signal="level_changed" from="Maze" to="Maze" method="_generate_maze"]
