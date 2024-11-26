@@ -3,11 +3,8 @@ class_name Maze
 
 static var level: int = 1
 
-var x_dim: int = level_to_dim(level)
+var x_dim: int = ((level % 2) + 1) + level
 var y_dim: int = x_dim
-
-static func level_to_dim(lev: int) -> int:
-	return ((lev % 2) + 1) + lev
 
 func _can_move_to(current: Vector2i) -> bool:
 	var _MAZE_RECT: Rect2i = Rect2i(Vector2i.ZERO, Vector2i(x_dim, y_dim))
