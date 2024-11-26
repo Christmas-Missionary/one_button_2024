@@ -10,6 +10,9 @@ var y_dim: int
 		y_dim = x_dim
 		level_changed.emit(val)
 
+@onready var _target: = $"../Target" as Node2D
+@onready var _arrows: = $"../Arrows" as CanvasItem
+
 signal level_changed(val: int)
 
 static func level_to_size(lev: int) -> int:
@@ -35,9 +38,9 @@ func _generate_maze(level_val: int) -> void:
 	for x in range(-1, x_dim + 1):
 		set_cell(Vector2i(x, y_dim), 0, Vector2i.ZERO)
 	
-	($/root/Main/Target as Node2D).position = Vector2i(30, 30) * (Vector2i(x_dim, y_dim) - Vector2i.ONE) + Vector2i(15, 15)
+	_target.position = Vector2i(30, 30) * (Vector2i(x_dim, y_dim) - Vector2i.ONE) + Vector2i(15, 15)
 	
-	($/root/Main/Arrows as CanvasItem).set_visible(level_val == 1)
+	_arrows.set_visible(level_val == 1)
 	if (level_val == 1):
 		return
 	
