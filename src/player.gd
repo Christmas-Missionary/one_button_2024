@@ -23,7 +23,8 @@ func _process(delta: float) -> void:
 	if Input.is_action_pressed(&"OneButton"):
 		time_left_to_reset -= delta
 		if time_left_to_reset <= 0.0:
-			get_tree().reload_current_scene()
+			($"../Maze" as Maze).wipe_save()
+			get_tree().change_scene_to_file("res://src/starting_up.tscn")
 	else:
 		time_left_to_reset = _RESET_TIME
 		set_process(false)

@@ -93,3 +93,6 @@ func _notification(arg: int) -> void:
 				 .to(_SAVE_PATH))
 	if arg == NOTIFICATION_WM_CLOSE_REQUEST:
 		get_tree().quit()
+
+func wipe_save() -> void:
+	ResourceSaver.save(Resource.new(), _SAVE_PATH)
