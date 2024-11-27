@@ -4,6 +4,7 @@ extends ColorRect
 @onready var _audio: = $Audio as AudioStreamPlayer
 @onready var _maze: = $"../Maze" as Maze
 @onready var _bullet_pool: Node = $/root/Main/BulletPool
+@onready var _particles_pool: Node = $/root/Main/ParticlesPool
 
 func _play() -> void:
 	_anime.play(&"Fade")
@@ -11,5 +12,5 @@ func _play() -> void:
 	await _audio.finished
 	_maze.level += 1
 	get_tree().set_pause(false)
-	for bullet: Node in _bullet_pool.get_children():
-		bullet.queue_free()
+	for node: Node in (_bullet_pool.get_children() + _particles_pool.get_children()):
+		node.queue_free()

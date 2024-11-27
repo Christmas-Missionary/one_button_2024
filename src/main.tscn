@@ -71,6 +71,8 @@ _data = {
 texture_filter = 1
 metadata/_edit_lock_ = true
 
+[node name="ParticlesPool" type="Node2D" parent="."]
+
 [node name="BulletPool" type="Node2D" parent="."]
 metadata/_edit_lock_ = true
 
@@ -123,10 +125,10 @@ metadata/_edit_lock_ = true
 
 [node name="LVAnimation" type="ColorRect" parent="."]
 process_mode = 3
-offset_left = -30.0
-offset_top = -30.0
-offset_right = 1970.0
-offset_bottom = 1970.0
+offset_left = -1000.0
+offset_top = -1000.0
+offset_right = 2000.0
+offset_bottom = 2000.0
 color = Color(0, 0, 0, 0)
 script = ExtResource("6_a8la6")
 metadata/_edit_lock_ = true
