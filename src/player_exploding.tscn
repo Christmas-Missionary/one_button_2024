@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://q7ipmngla1wn"]
+
+[ext_resource type="Script" path="res://src/player_exploding.gd" id="1_x1xjj"]
+
+[sub_resource type="Gradient" id="Gradient_r0onu"]
+offsets = PackedFloat32Array(0.714592, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_tsafq"]
+gradient = SubResource("Gradient_r0onu")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_okmwa"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 6.0
+orbit_velocity_min = 9.49949e-08
+orbit_velocity_max = 0.1
+radial_velocity_min = 9.99998
+radial_velocity_max = 100.0
+gravity = Vector3(0, 0, 0)
+color_ramp = SubResource("GradientTexture1D_tsafq")
+
+[node name="PlayerExploding" type="GPUParticles2D"]
+emitting = false
+amount = 200
+process_material = SubResource("ParticleProcessMaterial_okmwa")
+lifetime = 10.0
+one_shot = true
+explosiveness = 1.0
+script = ExtResource("1_x1xjj")
+
+[connection signal="finished" from="." to="." method="queue_free"]
