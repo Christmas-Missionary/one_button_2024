@@ -50,5 +50,10 @@ stream = SubResource("AudioStreamRandomizer_0o0h7")
 stream = SubResource("AudioStreamRandomizer_yti6g")
 pitch_scale = 1.2
 
+[node name="Cooldown" type="Timer" parent="."]
+process_callback = 0
+wait_time = 0.5
+one_shot = true
+
 [connection signal="body_entered" from="." to="." method="check_for_bullet"]
 [connection signal="finished" from="Death" to="." method="show"]
