@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://bcbmccgahs3k"]
+
+[ext_resource type="Texture2D" uid="uid://rkjgqvuuqrt5" path="res://assets/images/start_up_waffle.png" id="1_rskwl"]
+[ext_resource type="AudioStream" uid="uid://dut6cyt0255tp" path="res://assets/sfx/start_up.wav" id="2_hmpyg"]
+[ext_resource type="Script" path="res://src/startup_timer.gd" id="3_s425j"]
+
+[node name="StartingUp" type="Node2D"]
+texture_filter = 1
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(585.5, 325)
+scale = Vector2(30.95, 30.95)
+texture = ExtResource("1_rskwl")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_hmpyg")
+
+[node name="Timer" type="Timer" parent="."]
+process_callback = 0
+one_shot = true
+script = ExtResource("3_s425j")
+
+[connection signal="finished" from="AudioStreamPlayer" to="Timer" method="change_scene"]
+[connection signal="timeout" from="Timer" to="Sprite2D" method="show"]
+[connection signal="timeout" from="Timer" to="AudioStreamPlayer" method="play"]
