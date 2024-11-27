@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dh60k1irknwn4"]
+[gd_scene load_steps=21 format=3 uid="uid://dh60k1irknwn4"]
 
 [ext_resource type="Texture2D" uid="uid://h2aesnll3gfw" path="res://assets/images/block.png" id="1_4rcel"]
 [ext_resource type="PackedScene" uid="uid://b7ismxwl2or44" path="res://src/player.tscn" id="1_qd62x"]
@@ -8,13 +8,14 @@
 [ext_resource type="AudioStream" uid="uid://davbspjg0eoq8" path="res://assets/sfx/lv_complete_1.wav" id="6_8e3j0"]
 [ext_resource type="Texture2D" uid="uid://duywj6hnpoc0h" path="res://assets/images/arrow.png" id="6_77y7e"]
 [ext_resource type="Script" path="res://src/lv_animation.gd" id="6_a8la6"]
+[ext_resource type="Texture2D" uid="uid://c6qw5a6uyntku" path="res://assets/images/circle_pressed.png" id="6_s24u0"]
 [ext_resource type="AudioStream" uid="uid://cokywda6jm6ry" path="res://assets/sfx/lv_complete_2.wav" id="7_7gh7y"]
 [ext_resource type="AudioStream" uid="uid://chqxj5jfdg5hu" path="res://assets/sfx/lv_complete_3.wav" id="8_4m3x3"]
 [ext_resource type="Texture2D" uid="uid://dg2jrk3exngto" path="res://assets/images/circle.png" id="11_rfsdh"]
 [ext_resource type="Script" path="res://src/level_texture.gd" id="12_sk8ig"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xju82"]
-radius = 70.0
+radius = 50.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ocu0t"]
 texture = ExtResource("1_4rcel")
@@ -103,7 +104,11 @@ texture = ExtResource("6_77y7e")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="TouchScreenButton" type="TouchScreenButton" parent="CanvasLayer"]
-position = Vector2(135, 325)
+texture_filter = 1
+position = Vector2(75, 262)
+scale = Vector2(1.25, 1.25)
+texture_normal = ExtResource("11_rfsdh")
+texture_pressed = ExtResource("6_s24u0")
 shape = SubResource("CircleShape2D_xju82")
 action = "OneButton"
 visibility_mode = 1
