@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://dh60k1irknwn4"]
+[gd_scene load_steps=22 format=3 uid="uid://dh60k1irknwn4"]
 
 [ext_resource type="Texture2D" uid="uid://h2aesnll3gfw" path="res://assets/images/block.png" id="1_4rcel"]
 [ext_resource type="PackedScene" uid="uid://b7ismxwl2or44" path="res://src/player.tscn" id="1_qd62x"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://src/lv_animation.gd" id="6_a8la6"]
 [ext_resource type="Texture2D" uid="uid://c6qw5a6uyntku" path="res://assets/images/circle_pressed.png" id="6_s24u0"]
 [ext_resource type="AudioStream" uid="uid://cokywda6jm6ry" path="res://assets/sfx/lv_complete_2.wav" id="7_7gh7y"]
+[ext_resource type="Script" path="res://src/touch_screen_button.gd" id="7_brka7"]
 [ext_resource type="AudioStream" uid="uid://chqxj5jfdg5hu" path="res://assets/sfx/lv_complete_3.wav" id="8_4m3x3"]
 [ext_resource type="Texture2D" uid="uid://dg2jrk3exngto" path="res://assets/images/circle.png" id="11_rfsdh"]
 [ext_resource type="Script" path="res://src/level_texture.gd" id="12_sk8ig"]
@@ -104,6 +105,7 @@ texture = ExtResource("6_77y7e")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="TouchScreenButton" type="TouchScreenButton" parent="CanvasLayer"]
+visible = false
 texture_filter = 1
 position = Vector2(75, 262)
 scale = Vector2(1.25, 1.25)
@@ -111,6 +113,7 @@ texture_normal = ExtResource("11_rfsdh")
 texture_pressed = ExtResource("6_s24u0")
 shape = SubResource("CircleShape2D_xju82")
 visibility_mode = 1
+script = ExtResource("7_brka7")
 
 [node name="Timer" type="Timer" parent="CanvasLayer/TouchScreenButton"]
 process_callback = 0
