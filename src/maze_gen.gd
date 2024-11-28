@@ -36,7 +36,6 @@ func _can_move_to(current: Vector2i) -> bool:
 
 func _generate_maze(level_val: int) -> void:
 	clear()
-	_is_new_level = true
 	# place_border
 	for y in range(-1, maze_length):
 		set_cell(Vector2i(-1, y), 0, Vector2i.ZERO)
@@ -79,6 +78,14 @@ func _generate_maze(level_val: int) -> void:
 		# if we hit a dead end or are at a cross section
 		if !found_new_path:
 			set_cell(current, 0, Vector2i.ZERO)
+	
+	if Touch.is_mobile_on_web:
+		_is_new_level = false
+		(SaveGame.new()
+				 .save(level, get_used_cells())
+				 .to(_SAVE_PATH))
+	else:
+		_is_new_level = true
 
 ## The last five characters lower chances of this save file colliding with other games.
 const _SAVE_PATH: String = "user://one_button_2024_n80x3.tres"
