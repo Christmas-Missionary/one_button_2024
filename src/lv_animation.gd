@@ -9,7 +9,9 @@ extends ColorRect
 func _play() -> void:
 	_anime.play(&"Fade")
 	_audio.play()
-	await _audio.finished
+
+# Called by _anime just before finishing
+func _transition() -> void:
 	_maze.level += 1
 	get_tree().set_pause(false)
 	for node: Node in (_bullet_pool.get_children() + _particles_pool.get_children()):
