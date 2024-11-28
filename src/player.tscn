@@ -61,4 +61,7 @@ wait_time = 0.5
 one_shot = true
 
 [connection signal="body_entered" from="." to="." method="check_for_bullet"]
+[connection signal="player_dead" from="." to="." method="hide"]
+[connection signal="player_dead" from="." to="Death" method="play"]
+[connection signal="player_dead" from="." to="Death/DeathTimer" method="start"]
 [connection signal="timeout" from="Death/DeathTimer" to="." method="show"]

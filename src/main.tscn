@@ -178,6 +178,7 @@ libraries = {
 "": SubResource("AnimationLibrary_2ih3u")
 }
 
+[connection signal="player_dead" from="Player" to="BulletPool" method="_queue_free_children"]
 [connection signal="bullet_entered" from="Target" to="LVAnimation" method="_play"]
 [connection signal="pressed" from="CanvasLayer/TouchScreenButton" to="Player" method="_shoot"]
 [connection signal="pressed" from="CanvasLayer/TouchScreenButton" to="CanvasLayer/TouchScreenButton/Timer" method="start"]

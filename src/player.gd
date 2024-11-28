@@ -1,11 +1,11 @@
 extends Area2D
 
 @onready var _shoot_audio: = $Shoot as AudioStreamPlayer
-@onready var _death: = $Death as AudioStreamPlayer
-@onready var _death_timer: = $Death/DeathTimer as Timer
 @onready var _cooldown: = $Cooldown as Timer
 @onready var _bullet_pool: Node = $/root/Main/BulletPool
 @onready var _particles_pool: Node = $/root/Main/ParticlesPool
+
+signal player_dead
 
 func _physics_process(delta: float) -> void:
 	const _ROT_SPEED: float = PI / 1.2
@@ -47,8 +47,4 @@ func check_for_bullet(body: Node2D) -> void:
 		.instantiate() as PlayerParticles)
 		.as_child_to(_particles_pool)
 		.spawn(transform))
-		for bullet: Node in _bullet_pool.get_children():
-			bullet.queue_free()
-		hide()
-		_death.play()
-		_death_timer.start()
+		player_dead.emit()
