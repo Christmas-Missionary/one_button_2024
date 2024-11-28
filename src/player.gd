@@ -2,6 +2,7 @@ extends Area2D
 
 @onready var _shoot_audio: = $Shoot as AudioStreamPlayer
 @onready var _death: = $Death as AudioStreamPlayer
+@onready var _death_timer: = $Death/DeathTimer as Timer
 @onready var _cooldown: = $Cooldown as Timer
 @onready var _bullet_pool: Node = $/root/Main/BulletPool
 @onready var _particles_pool: Node = $/root/Main/ParticlesPool
@@ -39,6 +40,7 @@ func reset_everything() -> void:
 	($"../Maze" as Maze).wipe_save()
 	get_tree().change_scene_to_file("res://src/starting_up.tscn")
 
+# todo: make into player_dead signal
 func check_for_bullet(body: Node2D) -> void:
 	if body is Bullet:
 		((preload("res://src/player_exploding.tscn")
@@ -49,3 +51,4 @@ func check_for_bullet(body: Node2D) -> void:
 			bullet.queue_free()
 		hide()
 		_death.play()
+		_death_timer.start()
