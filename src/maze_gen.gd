@@ -6,12 +6,14 @@ var maze_length: int
 	set(val):
 		level = val
 		maze_length = level_to_size(val)
-		level_changed.emit(val)
+		level_value_changed.emit(val)
+		new_level.emit()
 
 @onready var _target: = $"../Target" as Node2D
 @onready var _arrows: = $"../Arrows" as CanvasItem
 
-signal level_changed(val: int)
+signal new_level
+signal level_value_changed(val: int)
 
 static func level_to_size(lev: int) -> int:
 	return ((lev % 2) + 1) + lev
@@ -22,12 +24,12 @@ func _ready() -> void:
 		var save_game: = ResourceLoader.load(_SAVE_PATH) as SaveGame
 		if save_game != null and !save_game.are_cells_null():
 			level = save_game.level
-			level_changed.connect(_generate_maze)
+			level_value_changed.connect(_generate_maze)
 			for cell: Vector2i in save_game.get_cells():
 				set_cell(cell, 0, Vector2i.ZERO)
 			_target.position = Vector2i(30, 30) * (Vector2i.ONE * (maze_length - 1)) + Vector2i(15, 15)
 			return
-	level_changed.connect(_generate_maze)
+	level_value_changed.connect(_generate_maze)
 	level = 1
 
 func _can_move_to(current: Vector2i) -> bool:
