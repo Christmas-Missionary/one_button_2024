@@ -110,8 +110,11 @@ scale = Vector2(1.25, 1.25)
 texture_normal = ExtResource("11_rfsdh")
 texture_pressed = ExtResource("6_s24u0")
 shape = SubResource("CircleShape2D_xju82")
-action = "OneButton"
 visibility_mode = 1
+
+[node name="Timer" type="Timer" parent="CanvasLayer/TouchScreenButton"]
+process_callback = 0
+wait_time = 5.0
 
 [node name="LevelTexture" type="TextureRect" parent="CanvasLayer"]
 texture_filter = 1
@@ -156,5 +159,9 @@ libraries = {
 }
 
 [connection signal="bullet_entered" from="Target" to="LVAnimation" method="_play"]
+[connection signal="pressed" from="CanvasLayer/TouchScreenButton" to="Player" method="_shoot"]
+[connection signal="pressed" from="CanvasLayer/TouchScreenButton" to="CanvasLayer/TouchScreenButton/Timer" method="start"]
+[connection signal="released" from="CanvasLayer/TouchScreenButton" to="CanvasLayer/TouchScreenButton/Timer" method="stop"]
+[connection signal="timeout" from="CanvasLayer/TouchScreenButton/Timer" to="Player" method="reset_everything"]
 [connection signal="level_changed" from="Maze" to="Camera" method="_adjust"]
 [connection signal="level_changed" from="Maze" to="CanvasLayer/LevelTexture" method="_adjust_balls"]

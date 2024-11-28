@@ -10,9 +10,8 @@ func _physics_process(delta: float) -> void:
 	const _ROT_SPEED: float = PI / 1.2
 	rotate(_ROT_SPEED * delta)
 
-func _unhandled_input(event: InputEvent) -> void:
-	if (event.is_action_pressed(&"OneButton") or
-	(event is InputEventAction and (event as InputEventAction).action == &"OneButton")):
+func _unhandled_key_input(event: InputEvent) -> void:
+	if event.is_action_pressed(&"OneButton"):
 		_shoot()
 
 func _shoot() -> void:
@@ -31,11 +30,14 @@ func _process(delta: float) -> void:
 	if Input.is_action_pressed(&"OneButton"):
 		time_left_to_reset -= delta
 		if time_left_to_reset <= 0.0:
-			($"../Maze" as Maze).wipe_save()
-			get_tree().change_scene_to_file("res://src/starting_up.tscn")
+			reset_everything()
 	else:
 		time_left_to_reset = _RESET_TIME
 		set_process(false)
+
+func reset_everything() -> void:
+	($"../Maze" as Maze).wipe_save()
+	get_tree().change_scene_to_file("res://src/starting_up.tscn")
 
 func check_for_bullet(body: Node2D) -> void:
 	if body is Bullet:
