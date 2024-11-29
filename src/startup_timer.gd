@@ -20,7 +20,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		_start()
 
 func _start() -> void:
-	($"../Keyboard/Anime" as AnimationPlayer).play(&"Fade Out")
+	($"../Keyboard/Anime" as AnimationPlayer).play(&"FadeOut")
 	($"../Audio" as AudioStreamPlayer).play()
 	await get_tree().create_timer(2.5).timeout
 	get_tree().change_scene_to_packed(preload("res://src/main.tscn"))
