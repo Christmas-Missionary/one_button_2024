@@ -1,20 +1,76 @@
-[gd_scene load_steps=4 format=3 uid="uid://bcbmccgahs3k"]
+[gd_scene load_steps=14 format=3 uid="uid://bcbmccgahs3k"]
 
 [ext_resource type="Texture2D" uid="uid://rkjgqvuuqrt5" path="res://assets/images/start_up_waffle.png" id="1_rskwl"]
 [ext_resource type="AudioStream" uid="uid://dut6cyt0255tp" path="res://assets/sfx/start_up.wav" id="2_hmpyg"]
 [ext_resource type="Script" path="res://src/startup_timer.gd" id="3_s425j"]
+[ext_resource type="Texture2D" uid="uid://5s23h4lii2te" path="res://assets/images/keyboard_1.png" id="4_qvydl"]
+[ext_resource type="Texture2D" uid="uid://bbggg8uthppl6" path="res://assets/images/keyboard_2.png" id="5_gd5g8"]
+[ext_resource type="Texture2D" uid="uid://dg2jrk3exngto" path="res://assets/images/circle.png" id="6_enikj"]
+[ext_resource type="Texture2D" uid="uid://c6qw5a6uyntku" path="res://assets/images/circle_pressed.png" id="7_dnsvv"]
+[ext_resource type="Texture2D" uid="uid://ci0npdeu43ssd" path="res://assets/images/phone.png" id="8_ktb73"]
+[ext_resource type="Texture2D" uid="uid://duywj6hnpoc0h" path="res://assets/images/arrow.png" id="9_r01wn"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pqy5e"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_qvydl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_gd5g8")
+}],
+"loop": true,
+"name": &"default",
+"speed": 1.0
+}]
+
+[sub_resource type="Animation" id="Animation_5u704"]
+resource_name = "Fade Out"
+length = 1.9
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.9),
+"transitions": PackedFloat32Array(1, 0),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_jju08"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6fw6g"]
+_data = {
+"Fade Out": SubResource("Animation_5u704"),
+"RESET": SubResource("Animation_jju08")
+}
 
 [node name="StartingUp" type="Node2D"]
 texture_filter = 1
 metadata/_edit_lock_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-visible = false
+[node name="Grid" type="Sprite2D" parent="."]
 position = Vector2(585.5, 325)
 scale = Vector2(30.95, 30.95)
 texture = ExtResource("1_rskwl")
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="Audio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_hmpyg")
 
 [node name="Timer" type="Timer" parent="."]
@@ -22,6 +78,33 @@ process_callback = 0
 one_shot = true
 script = ExtResource("3_s425j")
 
-[connection signal="finished" from="AudioStreamPlayer" to="Timer" method="change_scene"]
-[connection signal="timeout" from="Timer" to="Sprite2D" method="show"]
-[connection signal="timeout" from="Timer" to="AudioStreamPlayer" method="play"]
+[node name="Keyboard" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(600, 325)
+sprite_frames = SubResource("SpriteFrames_pqy5e")
+autoplay = "default"
+
+[node name="Anime" type="AnimationPlayer" parent="Keyboard"]
+callback_mode_process = 0
+libraries = {
+"": SubResource("AnimationLibrary_6fw6g")
+}
+
+[node name="TouchButton" type="TouchScreenButton" parent="."]
+visible = false
+position = Vector2(75, 275)
+texture_normal = ExtResource("6_enikj")
+texture_pressed = ExtResource("7_dnsvv")
+
+[node name="Phone" type="Sprite2D" parent="TouchButton"]
+position = Vector2(500, 50)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("8_ktb73")
+
+[node name="Arrow" type="Sprite2D" parent="TouchButton"]
+position = Vector2(250, 50)
+rotation = 1.5708
+scale = Vector2(10, 10)
+texture = ExtResource("9_r01wn")
+
+[connection signal="timeout" from="Timer" to="Timer" method="_await_player"]
