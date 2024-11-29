@@ -30,3 +30,11 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+
+File: res://assets/images/phone.png  
+Source: https://www.clker.com/clipart-24180.html  
+Copyright: 2009, OCAL
+License: CC0-1.0
+Source to License: https://www.clker.com/disclaimer.html  
+Notes: The source to the license is under "UPLOADING CONTENT". I traced over this asset to make a simple black and white image.
