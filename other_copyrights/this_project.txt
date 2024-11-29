@@ -38,3 +38,11 @@ Copyright: 2009, OCAL
 License: CC0-1.0
 Source to License: https://www.clker.com/disclaimer.html  
 Notes: The source to the license is under "UPLOADING CONTENT". I traced over this asset to make a simple black and white image.
+
+
+File: https://img.itch.zone/aW1nLzE4Nzg1MzE3LnBuZw==/original/GJwzps.png
+Source: https://www.clker.com/clipart-international-law-logo.html  
+Copyright: 2011, Michael Ü Lopez Babas
+License: CC0-1.0
+Source to License: https://www.clker.com/disclaimer.html  
+Notes: It is on https://christmas-missionary.itch.io/ball-game, 2nd image in description
