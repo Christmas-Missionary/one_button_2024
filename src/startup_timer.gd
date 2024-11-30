@@ -10,6 +10,7 @@ func _await_player() -> void:
 		var touch: = ($"../TouchButton" as TouchScreenButton)
 		touch.show()
 		touch.pressed.connect(_start, CONNECT_ONE_SHOT)
+		($"../Arrows" as Node2D).show()
 	else:
 		($"../Keyboard" as AnimatedSprite2D).show()
 		set_process_unhandled_key_input(true)
