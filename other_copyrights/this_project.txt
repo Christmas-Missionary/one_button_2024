@@ -1,4 +1,4 @@
-This file is for assets used for this project.  
+This file is for assets used in this project.  
 Details include where the asset is, where it came from, its copyright, its license, and any other needed info.  
 If the file path starts with "res://", it is a path relative to the top directory of the repo, one_button_2024.
 
