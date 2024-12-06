@@ -15,6 +15,7 @@ var maze_length: int
 signal new_level
 signal level_value_changed(val: int)
 
+## Calculates level to the size (side length) of the maze, could be inlined.
 static func level_to_size(lev: int) -> int:
 	return ((lev % 2) + 1) + lev
 
@@ -38,7 +39,8 @@ func _can_move_to(current: Vector2i) -> bool:
 
 func _generate_maze(level_val: int) -> void:
 	clear()
-	# place_border
+	
+	# places the walls in maze
 	for y in range(-1, maze_length):
 		set_cell(Vector2i(-1, y), 0, Vector2i.ZERO)
 	for x in range(-1, maze_length):
@@ -90,6 +92,7 @@ func _generate_maze(level_val: int) -> void:
 		_is_new_level = true
 
 ## The last five characters lower chances of this save file colliding with other games.
+## On hindsight, I don't know if that was really needed.
 const _SAVE_PATH: String = "user://one_button_2024_n80x3.tres"
 
 var _is_new_level: bool = false
@@ -103,5 +106,7 @@ func _notification(arg: int) -> void:
 	if arg == NOTIFICATION_WM_CLOSE_REQUEST:
 		get_tree().quit()
 
+## An attempt to cast a generic resource as SaveGame will be null.
+## The file loader in _ready sets level to 1, then generates a new maze.
 func wipe_save() -> void:
 	ResourceSaver.save(Resource.new(), _SAVE_PATH)

@@ -3,7 +3,7 @@ class_name SaveGame
 
 @export var level: int
 
-## These 2 save on file size, as opposed to one Array[Vector2i], not NOT as a .res file
+## These 2 variables save on file size, as opposed to one Array[Vector2i], NOT as a .res file
 @export var x: Array[int]
 @export var y: Array[int]
 
@@ -17,6 +17,8 @@ func save(level_: int, all_cells_: Array[Vector2i]) -> SaveGame:
 func to(save_path: String) -> void:
 	ResourceSaver.save(self, save_path)
 
+## an element in each array is paired via their index.
+## Varying lengths of the arrays messes up everything.
 func are_cells_null() -> bool:
 	return x.size() != y.size()
 

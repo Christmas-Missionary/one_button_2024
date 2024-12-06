@@ -4,6 +4,7 @@ func _ready() -> void:
 	start(randf_range(0.8, 2.2))
 	set_process_unhandled_key_input(false)
 
+## Shows to the player which button to press
 func _await_player() -> void:
 	($"../Grid" as Sprite2D).hide()
 	if OS.has_feature("web_android") or OS.has_feature("web_ios"):
@@ -17,9 +18,11 @@ func _await_player() -> void:
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if event.is_action_pressed(&"OneButton"):
-		set_process_unhandled_key_input(false)
+		set_process_unhandled_key_input(false) # One time thing
 		_start()
 
+## animation and audio will be done in 1.9 seconds.
+## This function waits for 2.5 seconds total.
 func _start() -> void:
 	($"../Keyboard/Anime" as AnimationPlayer).play(&"FadeOut")
 	($"../Audio" as AudioStreamPlayer).play()

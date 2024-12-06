@@ -22,9 +22,11 @@ func _shoot() -> void:
 		.as_child_to(_bullet_pool)
 		.spawn(position, rotation))
 		_shoot_audio.play()
+		# https://gameaccessibilityguidelines.com/include-a-cool-down-period-post-acceptance-delay-of-0-5-seconds-between-inputs/
 		_cooldown.start()
 		set_process(true)
 
+## If you want to reset the game without deleting the save file, you hold down space for 5 seconds.
 const _RESET_TIME: float = 5.0
 var time_left_to_reset: float = _RESET_TIME
 func _process(delta: float) -> void:
@@ -40,7 +42,6 @@ func reset_everything() -> void:
 	($"../Maze" as Maze).wipe_save()
 	get_tree().change_scene_to_file("res://src/starting_up.tscn")
 
-# todo: make into player_dead signal
 func check_for_bullet(body: Node2D) -> void:
 	if body is Bullet:
 		((preload("res://src/player_exploding.tscn")
