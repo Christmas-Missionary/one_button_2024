@@ -4,13 +4,19 @@ If the file path starts with "res://", it is a path relative to the top director
 
 
 Files: res://src/maze_gen.gd, res://src/camera.gd
+File Copyright: 2025, Christmas_Missionary
+Sublicense: MIT License
 Sources: https://github.com/Goldenlion5648/GodotMazeGenerationVisualizer/blob/master/maze_gen.gd,  
 https://github.com/Goldenlion5648/GodotMazeGenerationVisualizer/blob/master/Camera2D.gd
-Copyright: 2023, Goldenlion5648/ThinkWithGames
-License: MIT License
+Source Copyright: 2023, Goldenlion5648/ThinkWithGames
+Source License: MIT License
+Notes:
+If you are using the files `maze_gen.gd` and/or `camera.gd` in your own project, I recommend keeping the MIT license below.
+If you are making changes, I recommend attaching your copyright notice above mine.
 License in Full:
 MIT License
 
+Copyright (c) 2025 Christmas_Missionary
 Copyright (c) 2023 Goldenlion5648/ThinkWithGames
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -32,17 +38,26 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
-File: res://assets/images/phone.png  
-Source: https://www.clker.com/clipart-24180.html  
-Copyright: 2009, OCAL
-License: CC0-1.0
-Source to License: https://www.clker.com/disclaimer.html  
-Notes: The source to the license is under "UPLOADING CONTENT". I traced over this asset to make a simple black and white image.
+File: res://assets/images/phone.png
+File Copyright: 2025, Christmas_Missionary
+File License: CC0-1.0
+Source: https://www.clker.com/clipart-24180.html
+Source Copyright: 2009, OCAL
+Source License: CC0-1.0
+Proof of Source License: https://www.clker.com/disclaimer.html
+Notes:
+The source to the license is under "UPLOADING CONTENT".
+I used GIMP to make a simple black and white copy.
 
 
 File: https://img.itch.zone/aW1nLzE4Nzg1MzE3LnBuZw==/original/GJwzps.png
-Source: https://www.clker.com/clipart-international-law-logo.html  
-Copyright: 2011, Michael Ü Lopez Babas
-License: CC0-1.0
-Source to License: https://www.clker.com/disclaimer.html  
-Notes: It is on https://christmas-missionary.itch.io/ball-game, 2nd image in description
+File Copyright: 2025, Christmas_Missionary
+File License: CC0-1.0
+Source: https://www.clker.com/clipart-international-law-logo.html
+Source Copyright: 2011, Michael Ü Lopez Babas
+Source License: CC0-1.0
+Proof of Source License: https://www.clker.com/disclaimer.html
+Notes:
+The source to the license is under "UPLOADING CONTENT".
+I used GIMP to make a simple black and white copy.
+The file I use is on https://christmas-missionary.itch.io/ball-game, 2nd image in description
